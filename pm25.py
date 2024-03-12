@@ -5,6 +5,31 @@ df = None
 six_counties = ["臺北市", "新北市", "桃園市", "臺中市", "臺南市", "高雄市"]
 
 
+def get_county_pm25(county):
+    global df
+
+    if df is None:
+        df = pd.read_csv(url).dropna()
+
+    df1 = df.groupby("county").get_group(county)
+
+    columns = df1.columns.tolist()
+    values = df1.values.tolist()
+
+    return columns, values
+
+
+def get_counties():
+    global df
+
+    if df is None:
+        df = pd.read_csv(url).dropna()
+
+    counties = df["county"].unique()
+
+    return counties
+
+
 def get_pm25():
     global df
 
