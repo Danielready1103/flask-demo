@@ -1,6 +1,6 @@
 from flask import Flask, render_template
 from datetime import datetime
-from pm25 import get_pm25
+from pm25 import get_pm25, get_six_pm25, six_counties
 import json
 
 books = {1: "Python book", 2: "Java book", 3: "Flask book"}
@@ -11,6 +11,21 @@ app = Flask(__name__)
 @app.route("/pm25-charts")
 def pm25_charts():
     return render_template("pm25-charts.html")
+
+
+@app.route("/six-pm25-data")
+def six_pm25_data():
+    pm25 = get_six_pm25()
+
+    result = json.dumps(
+        {
+            "site": six_counties,
+            "pm25": pm25,
+        },
+        ensure_ascii=False,
+    )
+
+    return result
 
 
 @app.route("/pm25-data", methods=["GET"])
