@@ -20,8 +20,22 @@ def pm25_data():
     pm25 = [value[2] for value in values]
     datetime = values[0][-2]
 
+    # 取得最高最低的數據
+    sorted_data = sorted(values, key=lambda x: x[2])
+    print(sorted_data)
+
+    lowest = {"site": sorted_data[0][0], "pm25": sorted_data[0][2]}
+    highest = {"site": sorted_data[-1][0], "pm25": sorted_data[-1][2]}
+
     result = json.dumps(
-        {"datetime": datetime, "site": site, "pm25": pm25}, ensure_ascii=False
+        {
+            "datetime": datetime,
+            "site": site,
+            "pm25": pm25,
+            "lowest": lowest,
+            "highest": highest,
+        },
+        ensure_ascii=False,
     )
 
     return result
